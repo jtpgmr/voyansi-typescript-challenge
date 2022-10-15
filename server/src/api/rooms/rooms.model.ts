@@ -2,7 +2,7 @@ import { Document, Schema, model } from "mongoose";
 import { UserDocument } from "../users/users.model";
 
 export interface UpdateRoomInput {
-  name: string
+  occupant: string | null
 }
 
 export interface CreateRoomInput {
@@ -14,7 +14,7 @@ export interface RoomDocument extends CreateRoomInput, Document {
   // for timestamps
   createdAt: Date;
   updatedAt: Date;
-  occupant: UserDocument["_id"];
+  occupant: UserDocument["_id"] | null;
 }
 
 const roomSchema = new Schema(
