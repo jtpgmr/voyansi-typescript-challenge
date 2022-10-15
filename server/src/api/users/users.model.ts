@@ -42,7 +42,9 @@ userSchema.pre("save", async function (next) {
     return next();
   }
 
-  const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
+  const saltWorkFactor: string = config.get<string>("saltWorkFactor")
+
+  const salt = await bcrypt.genSalt(parseInt(saltWorkFactor));
   const hash = await bcrypt.hashSync(newUser.password, salt);
 
   newUser.password = hash;

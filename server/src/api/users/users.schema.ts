@@ -20,12 +20,8 @@ export const userSchema = z.object({
   }),
 });
 
+
 export type RegisterUserType = Omit<
   z.TypeOf<typeof userSchema>,
   "body.confirmPassword"
 >;
-
-// export type RegisterUserType = Omit<
-//   z.TypeOf<typeof userSchema>,
-//   "body.confirmPassword" | "body.rooms"
-// >;

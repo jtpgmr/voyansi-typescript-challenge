@@ -1,6 +1,12 @@
 import _ from "lodash";
+import { FilterQuery } from "mongoose";
+import { IdParam } from "../../interfaces/IdParam";
 import log from "../../utils/logger";
 import UserModel, { RegisterUserInput, UserDocument } from "./users.model";
+
+const getSingleUserService = async (param: IdParam) => {
+  return await UserModel.findById(param)
+}
 
 const registerUserService = async (userDocumentEntry: RegisterUserInput) => {
   try {
@@ -41,4 +47,4 @@ const validateUserPasswordService = async ({
   }
 };
 
-export { registerUserService, validateUserPasswordService };
+export { getSingleUserService, registerUserService, validateUserPasswordService };

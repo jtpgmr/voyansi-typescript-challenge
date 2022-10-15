@@ -2,11 +2,11 @@ import jwt from "jsonwebtoken";
 import config from "config";
 import log from "./logger";
 
-export function signJwt(
+const signJwt = (
   object: Object,
   keyName: "accessTokenPrivateKey" | "refreshTokenPrivateKey",
   options?: jwt.SignOptions | undefined
-) {
+) => {
   const signingKey = Buffer.from(
     config.get<string>(keyName),
     "base64"
@@ -19,27 +19,28 @@ export function signJwt(
   });
 }
 
-export function verifyJwt(
+const verifyJwt = (
   token: string,
   keyName: "accessTokenPublicKey" | "refreshTokenPublicKey"
-) {
+) => {
   const publicKey = Buffer.from(config.get<string>(keyName), "base64").toString(
     "ascii"
   );
-
   try {
     const decoded = jwt.verify(token, publicKey);
     return {
-      valid: true,
+      isValid: true,
       expired: false,
       decoded,
     };
-  } catch (e: any) {
-    console.error(e);
+  } catch (err: any) {
+    log.error(err)
     return {
-      valid: false,
-      expired: e.message === "jwt expired",
+      isValid: false,
+      expired: err.message === "jwt expired",
       decoded: null,
     };
   }
 }
+
+export { signJwt, verifyJwt }

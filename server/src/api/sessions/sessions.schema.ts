@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export const sessionSchema = z.object({
+const sessionSchema = z.object({
   body: z.object({
     email: z.string({
       required_error: "An email is required.",
@@ -10,3 +10,5 @@ export const sessionSchema = z.object({
     })
   })
 });
+
+export default sessionSchema

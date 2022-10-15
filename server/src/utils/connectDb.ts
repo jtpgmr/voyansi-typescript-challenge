@@ -7,8 +7,6 @@ import log from "./logger";
 dotenv.config();
 const mongoUri = config.get<string>("mongoUri");
 
-// const MONGO_URI = `mongodb+srv://${process.env.MONGO_URI}`;
-
 const connectDb = async () => {
   try {
     const connect = await mongoose.connect(mongoUri);

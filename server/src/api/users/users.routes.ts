@@ -3,7 +3,7 @@ import { Router } from 'express';
 import * as UsersControllers from './users.controllers';
 import validateRequest from '../../middlewares/validateRequest';
 import { IdParam } from '../../interfaces/IdParam';
-import { userSchema } from '../../schemas/user.schema';
+import { userSchema } from './users.schema';
 
 const userRoutes = Router();
 
@@ -11,9 +11,9 @@ const userRoutes = Router();
 
 // router.get('/:id', validateRequest({ params: IdParam }), UsersControllers.getUser);
 
-// router.get('/:id', validateRequest({ params: IdParam }), UsersControllers.getUser);
+userRoutes.get('/:id', validateRequest({body: userSchema, params: IdParam }), UsersControllers.getSingleUserController);
 
-userRoutes.post('/', validateRequest(userSchema), UsersControllers.registerUserController);
+userRoutes.post('/', validateRequest({ body: userSchema }), UsersControllers.registerUserController);
 
 // router.put('/:id', validateRequest({ params: IdParams, body: Todo }), TodoControllers.updateTodo);
 

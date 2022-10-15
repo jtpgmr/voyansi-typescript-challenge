@@ -1,38 +1,37 @@
 import { Document, Schema, model } from "mongoose";
-import bcrypt from "bcrypt";
-import config from "config";
+import { UserDocument } from "../users/users.model";
 
-export interface RegisterUserInput {
-  name: string;
-  email: string;
-  password: string;
+export interface UpdateRoomInput {
+  name: string
 }
 
-// combines the fields above with _id from Doc (along with generics)
-// then applies createdAt and updatedAt fields
-export interface UserDocument extends RegisterUserInput, Document {
+export interface CreateRoomInput {
+  name: string;
+  number: number;
+}
+
+export interface RoomDocument extends CreateRoomInput, Document {
   // for timestamps
   createdAt: Date;
   updatedAt: Date;
-  roomIds: [Schema.Types.ObjectId];
-  comparePassword(loginAttemptPassword: string): Promise<Boolean>;
+  occupant: UserDocument["_id"];
 }
 
 const roomSchema = new Schema(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    roomIds: [{
+    number: { type: Number, required: true, unique: true },
+    occupant: {
         type: Schema.Types.ObjectId,
-        ref: "Room"
-    }]
+        ref: "User",
+        default: null
+    }
   },
   {
     timestamps: true,
   }
 );
 
-const UserModel = model<UserDocument>("Room", roomSchema);
+const RoomModel = model<RoomDocument>("Room", roomSchema);
 
-export default UserModel;
+export default RoomModel;
