@@ -10,7 +10,7 @@ import log from "../../utils/logger";
 import { ZodError } from "zod";
 import UserModel from "../users/users.model";
 
-const getAllRoomsController = async (req: Request, res: Response) => {
+const getAllRoomsController = async (req: Request<{}, RoomDocument, {}>, res: Response) => {
   const rooms = await getAllRoomsService();
   return res.send(rooms);
 };

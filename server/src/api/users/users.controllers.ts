@@ -38,7 +38,7 @@ const getSingleUserController = async (req: Request<IdParam, UserDocument, {}>, 
     // 409 represents CONFLICT
     // thrown if "unique" field fails (ie email already exists)
     // or if required field is not included
-    return res.status(409).send(err)
+    return res.status(409)
 };
 }
 
@@ -56,7 +56,7 @@ const registerUserController = async (req: Request<{}, {}, RegisterUserType["bod
     // 409 represents CONFLICT
     // thrown if "unique" field fails (ie email already exists)
     // or if required field is not included
-    return res.status(409).send(err)
+    return res.status(409)
   }
 }
 
